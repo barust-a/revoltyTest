@@ -163,18 +163,18 @@ fonctionnel sur données locales. La page de notes et le Loom sont hors de cette
    « Dernière donnée : il y a 12 min » ; boutons « Appeler le client » (`tel:`) et
    « Créer une manip ».
 2. **Ce qui ne va pas** : une carte par alerte active — titre en français (« La batterie
-   ne se recharge plus »), gravité, « Depuis jeu. 17 sept., 14 h (7 jours) », « **Pour le
+   ne se recharge plus »), gravité, « Depuis lun. 21 sept., 14 h (3 jours) », « **Pour le
    client** : plus de secours en cas de coupure, sa facture remonte », « **À vérifier sur
    place** » (2–3 pistes), lien vers la manip liée ou bouton « Créer une manip » (mineure).
    Historique des alertes résolues replié.
 3. **Manips en cours** sur ce système, chacune avec « Clôturer ».
 4. **Carte Données** : verdict en une phrase (« Hier : la batterie a travaillé
-   normalement ✓ » / « Anormal depuis jeu. 17 sept. ») → ouvre l'écran données.
+   normalement ✓ » / « Anormal depuis lun. 21 sept. ») → ouvre l'écran données.
 
 #### C. Données d'un système (`/system/[id]/data`)
 
 1. **Verdict** en toutes lettres en tête (ex. « La batterie ne se charge plus alors que
-   les panneaux produisent — depuis jeu. 17 sept. »), suivi de « Dernière donnée : il y a
+   les panneaux produisent — depuis lun. 21 sept. »), suivi de « Dernière donnée : il y a
    12 min ».
 2. **Trois graphes empilés, axe horaire partagé 0 h–24 h**, jour sélectionné :
    - Production (aire ambre `#F5A524`) et conso (trait `#022818`), surplus hachuré
@@ -197,7 +197,7 @@ fonctionnel sur données locales. La page de notes et le Loom sont hors de cette
    Autoproduction (« part de ta conso couverte par le solaire », %), Autoconsommation
    (« part de ta production consommée sur place », %) ; Charge mini / maxi (%) ; Dernière
    donnée. Un total calculé sur une journée trouée porte la mention « incomplet ».
-5. **Frise 7 jours** : une barre double par jour (chargé ↑ / déchargé ↓), ▲ ambre sur jour
+5. **Frise 8 jours** (7 derniers jours + aujourd'hui) : une barre double par jour (chargé ↑ / déchargé ↓), ▲ ambre sur jour
    anormal, jour sans données hachuré, jour sélectionné surligné, SoC limité à mini / maxi
    ; bouton « ◂ Semaine précédente » jusqu'à 30 jours ; repère « Anormal depuis … » posé
    sur la frise.
@@ -307,7 +307,7 @@ compatible web pour le Loom).
 
 Installateur : Karim. 20 systèmes autour de Lyon.
 - **Mme Petit** (Lyon 3) — En panne : « La batterie ne se recharge plus » depuis
-  jeu. 17 sept. ; manip urgente « Remise en service » (via alerte), aujourd'hui.
+  lun. 21 sept. ; manip urgente « Remise en service » (via alerte), aujourd'hui.
 - **M. Garnier** (Bron) — En panne : « Batterie arrêtée » depuis hier ; manip urgente
   « Remise en service » créée automatiquement (via alerte), demain.
 - **M. Durand** (Caluire) — À surveiller : « Mesure de consommation incohérente
@@ -407,7 +407,7 @@ TDD sur `core/` (vitest), cas limites inclus :
 - `dailySummary` : journée complète ; journée avec trou (total marqué incomplet, pas
   compté à zéro) ; énergie arrivée d'un bloc après un trou → pas de pic ; journée vide.
 - `dayVerdict` / `detectAnomalyStart` : batterie qui ne charge plus malgré le surplus
-  depuis J-7 → « depuis jeu. 17 sept. » ; charge nocturne réseau en mode heures creuses →
+  depuis J-3 → « depuis lun. 21 sept. » ; charge nocturne réseau en mode heures creuses →
   normal ; jour nuageux sans surplus → normal ; trou seul ≠ anomalie.
 - `applyClosure` : résolu → attente_confirmation ; pas résolu → 2ᵉ passage + suite ;
   hors ligne → sync en_attente.
