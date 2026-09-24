@@ -236,7 +236,9 @@ interruption ; création possible hors ligne (synchronisée plus tard).
    4 modules »). *Obligatoire.*
 2. **Client** : recherche d'un client existant ou « Nouveau client » : nom + adresse
    *obligatoires* ; téléphone et **email facultatifs mais proposés** (« pour inviter ton
-   client dans son app »).
+   client dans son app »). Bascule « Client existant / Nouveau client » ; l'adresse est
+   **pré-remplie avec la position du téléphone** (idée Sungrow du benchmark), modifiable,
+   pour éviter de la taper avec des gants.
 3. **Mode de pilotage** : « Autoconsommation » pré-cochée (standard du marché) ;
    « Secours prioritaire » (garde toujours 30 % pour les coupures) ; « Heures creuses ».
    Une ligne d'explication chacun.
