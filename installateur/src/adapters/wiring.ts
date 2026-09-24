@@ -1,11 +1,10 @@
-import Storage from 'expo-sqlite/kv-store';
-
 import type { Services } from '../ports/services';
 import { createFakeBackend } from './backendFake';
 import { createDemoClock } from './clockDemo';
 import { createCommTestFake, createFieldCaptureFake, createLocationFake } from './deviceFakes';
 import { createDemoPort, DEMO_NOW_ISO } from './fixtures';
 import { createExpoHaptics } from './hapticsExpo';
+import { kvStore } from './kvStore';
 import { createFixtureMeasures } from './measuresFixtures';
 import { createCameraScanner } from './scannerCamera';
 import { createKvStorage } from './storageKv';
@@ -15,7 +14,7 @@ import { createKvStorage } from './storageKv';
 export function createServices(): Services {
   const backend = createFakeBackend();
   return {
-    storage: createKvStorage(Storage),
+    storage: createKvStorage(kvStore),
     clock: createDemoClock(DEMO_NOW_ISO),
     sync: backend.sync,
     network: backend.network,

@@ -13,7 +13,7 @@
       "package": "fr.revolty.installateur"
     },
     "web": {
-      "output": "static"
+      "output": "single"
     },
     "plugins": ["expo-router", "expo-sqlite", "expo-font"]
   }
