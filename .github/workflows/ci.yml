@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: stacks/react-native
+        working-directory: installateur
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: stacks/react-native/package-lock.json
+          cache-dependency-path: installateur/package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck

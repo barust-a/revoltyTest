@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Revolty Installateur",
+    "slug": "revolty-installateur",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "revoltyinstallateur",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "bundleIdentifier": "fr.revolty.installateur"
+    },
+    "android": {
+      "package": "fr.revolty.installateur"
+    },
+    "web": {
+      "output": "static"
+    },
+    "plugins": ["expo-router", "expo-sqlite", "expo-font"]
+  }
+}

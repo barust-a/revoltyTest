@@ -62,7 +62,7 @@ Pick the profile matching the project, then follow its skill *in addition to* th
 
 | Stack | Where | Skill |
 |-------|-------|-------|
-| React Native / Expo | `stacks/react-native/` (rename to your app) | `.claude/skills/rn-app-practices` |
+| React Native / Expo | `installateur/` | `.claude/skills/rn-app-practices` |
 | Web (React/Next) | not yet in template | add a `stacks/web/` profile via PR to ai-project-base |
 | Backend (Node API) | not yet in template | add a `stacks/backend/` profile via PR to ai-project-base |
 

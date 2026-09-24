@@ -1,5 +1,5 @@
 #!/bin/sh
 # Gate every commit: staged files pass eslint+prettier+related tests, whole app typechecks.
-# INIT.md: replace stacks/react-native with your app folder name.
-cd stacks/react-native || exit 1
+
+cd installateur || exit 1
 npx lint-staged && npx tsc --noEmit

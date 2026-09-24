@@ -1,10 +1,17 @@
 {
-  "name": "rn-skeleton",
+  "name": "revolty-installateur",
   "main": "expo-router/entry",
   "version": "0.1.0",
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.4.2",
+    "@expo-google-fonts/space-grotesk": "^0.4.1",
+    "@expo/vector-icons": "^15.0.2",
+    "d3-shape": "^3.2.0",
     "expo": "~57.0.1",
+    "expo-camera": "~57.0.5",
     "expo-constants": "~57.0.2",
+    "expo-font": "~57.0.4",
+    "expo-haptics": "~57.0.3",
     "expo-linking": "~57.0.1",
     "expo-router": "~57.0.2",
     "expo-splash-screen": "~57.0.1",
@@ -15,6 +22,7 @@
     "react-native": "0.86.0",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "4.25.2",
+    "react-native-svg": "15.15.4",
     "react-native-web": "~0.21.0",
     "zod": "^4.4.3",
     "zustand": "^5.0.14"
@@ -22,6 +30,7 @@
   "devDependencies": {
     "@react-native/jest-preset": "0.86.0",
     "@testing-library/react-native": "^14.0.1",
+    "@types/d3-shape": "^3.2.0",
     "@types/jest": "^30.0.0",
     "@types/react": "~19.2.2",
     "eslint": "^9.0.0",
@@ -47,7 +56,7 @@
     "test:native": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
-    "prepare": "git -C ../.. config core.hooksPath .husky"
+    "prepare": "git -C .. config core.hooksPath .husky"
   },
   "jest": {
     "preset": "jest-expo",
