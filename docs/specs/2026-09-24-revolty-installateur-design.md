@@ -76,8 +76,10 @@ fonctionnel sur données locales. La page de notes et le Loom sont hors de cette
 - Action principale en bas, jamais dans un coin ; un seul bouton primaire par écran.
 - La santé n'est **jamais portée par la couleur seule** : couleur + icône + libellé
   (WCAG 1.4.1 ; icônes d'état ≥ 3:1, WCAG 1.4.11).
-- **Seul l'anormal est coloré** (principe ISA-101) : l'état OK reste discret pour que le
-  rouge et l'ambre ressortent.
+- **Les états de santé sont les couleurs les plus saturées de l'écran** (principe ISA-101) :
+  l'état OK reste discret pour que le rouge et l'ambre ressortent. Le décor, lui, reprend
+  l'ADN chaleureux de revolty.fr (fond menthe, en-têtes teal, jaune pastel, pastilles
+  d'icônes, mascotte) — voir 3.5.
 - Langage courant, jamais de code erreur ; dates relatives (« Aujourd'hui »,
   « Jeu. 26 », « depuis 2 j ») ; vocabulaire du marché français (autoconsommation,
   autoproduction, surplus, chargé / déchargé, heures creuses).
@@ -142,8 +144,8 @@ fonctionnel sur données locales. La page de notes et le Loom sont hors de cette
 
 #### A. Accueil (`/`)
 
-1. **En-tête** vert forêt `#022818` : « Bonjour Karim », indicateur de connexion avec
-   compteur d'envois en attente, bouton secondaire « + Installer ». Hors ligne : bandeau
+1. **En-tête** teal `#037168` : « Bonjour Karim », indicateur de connexion avec
+   compteur d'envois en attente, bouton jaune « + Installer ». Hors ligne : bandeau
    gris « Hors ligne · données de 14:32 · 2 clôtures en attente d'envoi ».
 2. **Bandeau santé** : 4 compteurs touchables (filtrent le parc) ; un compteur à 0 est
    masqué ; si tout est OK : « ✓ Tes 20 systèmes vont bien ».
@@ -251,23 +253,39 @@ marque d'onduleur, photos du tableau.
 
 | Token | Valeur | Usage |
 |---|---|---|
-| `forest` | `#022818` | en-tête, titres, texte sur boutons verts |
-| `primary` | `#11e47a` | fond des boutons primaires (texte `forest`), charge batterie. **Jamais en texte sur blanc.** |
-| `teal` | `#037168` | liens, décharge, coche OK (discrète) |
-| `mint` | `#e8fff3` | fond de sélection (puces cochées) |
-| `bg` | `#f8faf9` | fond d'écran |
+Direction « v2 chaleureuse », validée avec l'utilisateur après revue de la v1 (jugée trop
+blanche et triste) : on reprend l'ADN de revolty.fr — aplats pastel, teal, mascotte.
+
+| Token | Valeur | Usage |
+|---|---|---|
+| `bg` | `#e8fff3` (menthe) | fond d'app, cartes blanches posées dessus |
+| `teal` | `#037168` | en-têtes (coins bas arrondis), titres de section, liens, décharge, coche OK |
+| `yellow` | `#fbf59e` | moments positifs : bouton « + Installer », bandeau « tout va bien », succès, bloc « Pour le client ». **Jamais à côté de l'ambre « À surveiller ».** |
+| `primary` | `#11e47a` | fond des boutons primaires (texte `forest`), charge batterie. **Jamais en texte sur fond clair.** |
+| `mintStrong` | `#c4f5d9` | pastilles d'icônes, sélection (puces, options) |
+| `tealSoft` | `#cfeee9` | pastilles d'icônes |
+| `forest` | `#022818` | texte fort, titres d'écran |
 | `card` | `#ffffff` | cartes |
-| `text` | `#4a5568` | texte courant |
-| `textMuted` | `#718096` | texte secondaire (≥ 17 uniquement) |
+| `text` | `#3f4a5a` | texte courant |
+| `textMuted` | `#5f6b7a` | texte secondaire (≥ 17 uniquement) |
 | `danger` | `#D92D20` | En panne |
 | `warning` | `#B54708` | À surveiller |
 | `offline` | `#667085` | Sans nouvelles (avec contour pointillé), hors ligne |
 | `solar` | `#F5A524` | production (graphes uniquement) |
 
+**Pastilles d'icônes** (48 dp, coins 14) par type de manip : remise en service ⚡ menthe,
+vérifier le tore / rappeler le client jaune, changer un module / vérifier la communication
+teal clair.
+
+**Mascotte** (illustrations batterie de revolty.fr, médaillon arrondi) uniquement dans les
+moments de respiration : accueil « tout va bien » (lunettes de soleil), clôture envoyée
+(pouce levé), installation créée (muscles). Jamais sur un écran de travail (clôture en
+cours, alertes, données).
+
 Typographie : Space Grotesk (titres 22–28), Inter (texte 17, libellés clés 19–20 gras).
-Rayons : 12 cartes, 16 gros boutons, 999 puces. Contraste visé : texte ≥ 7:1 sur les
-écrans terrain (lisibilité soleil / lampe frontale), icônes d'état ≥ 3:1. L'en-tête vert
-forêt ne doit pas être confondu avec l'état OK : l'OK n'utilise jamais d'aplat vert.
+Rayons : 16 cartes, 16–20 gros boutons, 999 puces. Contraste visé : texte ≥ 7:1 sur les
+écrans terrain (lisibilité soleil / lampe frontale), icônes d'état ≥ 3:1 ; le pastel n'est
+jamais une couleur de texte.
 
 ### 3.6 Proto Expo — couches (template `rn-app-practices`)
 
@@ -441,8 +459,10 @@ Autres décisions :
   réouverture (modèle Résolu → Clos des outils de ticketing).
 - « Sans nouvelles » en gris comme chez Sungrow / FoxESS / Hoymiles, mais avec contour
   pointillé et durée, parce qu'en ISA-101 le gris signifie « normal ».
-- Thème clair, en-tête vert forêt — contre le sombre (illisible en plein soleil) et le
-  double thème (coût sans valeur pour le test).
+- Thème clair « chaleureux » (fond menthe, en-tête teal, jaune pastel, mascotte) — contre
+  une v1 blanche et sobre jugée triste et loin de la marque, contre le sombre (illisible en
+  plein soleil) et le double thème (coût sans valeur pour le test). Les pastels restent des
+  fonds, jamais des couleurs de texte ni d'état.
 - Graphes empilés à axe partagé plutôt qu'un graphe unique à double axe (bonne pratique
   dataviz) ; batterie signée côté batterie avec axe libellé.
 - Proto Expo fonctionnel sur données locales — contre un cliquable (montre peu d'ingé)
