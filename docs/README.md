@@ -7,3 +7,8 @@ The documentation workflow (see `AGENTS.md` §1):
 - `smoke-tests/` — manual validation guides, `YYYY-MM-DD-<feature>-smoke-test.md`, written
   at PR time, with exact expected on-screen text.
 - `templates/` — copy these to start each document. Keep them in sync with practice changes.
+- `research/` — sourced benchmarks that informed a spec, `YYYY-MM-DD-<topic>.md`.
+- `design/` — approved mockups (PDF export + Claude Design sources, tokens). See
+  `design/README.md`.
+- `handoff/` — state-of-the-work notes to resume after a context reset. **Start here**:
+  the most recent file says where things stand and what comes next.

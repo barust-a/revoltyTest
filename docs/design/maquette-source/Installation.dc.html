@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0..1,0&amp;display=block" />
+        <link rel="stylesheet" href="./revolty.css" />
+        <style>
+          .field { display: flex; flex-direction: column; gap: 6px; }
+          .field-l { display: flex; align-items: baseline; justify-content: space-between; font-weight: 700; color: var(--forest); font-size: 17px; }
+          .req { font-size: 14px; font-weight: 700; color: var(--teal); }
+          .opt-l { font-size: 14px; font-weight: 600; color: var(--muted); }
+          .input { min-height: 56px; border-radius: 14px; background: var(--card); border: 2px solid var(--card); display: flex; align-items: center; gap: 10px; padding: 0 14px; font-size: 17px; color: var(--forest); box-shadow: 0 1px 2px rgba(3, 113, 104, .1); }
+          .input.filled { border-color: var(--teal); }
+          .input .ph-t { color: var(--muted); }
+          .gps { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--teal); background: var(--mint-strong); border-radius: 999px; padding: 3px 10px; align-self: flex-start; }
+          .or { display: flex; align-items: center; gap: 12px; color: var(--muted); font-weight: 600; font-size: 15px; }
+          .or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+          .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--card); border-radius: 16px; padding: 6px; box-shadow: 0 1px 2px rgba(3, 113, 104, .1); }
+          .seg span { min-height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; color: var(--forest); }
+          .seg span.on { background: var(--teal); color: #fff; }
+        </style>
+      </helmet>
+      <div class="phone" data-screen-label="Nouvelle installation">
+        <div class="topbar">
+          <div class="sb"><span>9:41</span><span class="fx ac gap4"><span class="ms s18">signal_cellular_alt</span><span class="ms s18">battery_full</span></span></div>
+          <div class="row"><button class="back"><span class="ms">close</span>Quitter</button><span class="title">Nouvelle installation</span></div>
+          <div style="padding:0 16px 18px" class="fx col gap8">
+            <div class="steps"><span class="{{ s1 }}"></span><span class="{{ s2 }}"></span><span class="{{ s3 }}"></span><span class="{{ s4 }}"></span><span class="{{ s5 }}"></span></div>
+            <div class="fx jb ac"><span class="meta" style="font-weight:700;color:#fff">{{ stepLabel }}</span><span class="help"><span class="ms s20">help</span>Aide</span></div>
+          </div>
+        </div>
+
+        <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+          <div class="body">
+            <div class="fx col gap4">
+              <div class="h1">Scanne la batterie</div>
+              <div class="meta">Vise l'étiquette sous le capot, à droite.</div>
+            </div>
+            <div class="viewfinder">
+              <div class="ph" style="align-items:flex-end;padding-bottom:18px">flux caméra · étiquette n° de série</div>
+              <div class="vf-box"></div>
+            </div>
+            <div class="found">
+              <span class="ms s32">check_circle</span>
+              <div class="fx col">
+                <span class="lbl num">RV-2409-1187</span>
+                <span class="meta">Revolty 10 kWh · 4 modules</span>
+              </div>
+            </div>
+            <button class="btn btn-sec btn-block"><span class="ms">keyboard</span>Saisir à la main</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+          <div class="body" style="gap:20px">
+            <div class="fx col gap4">
+              <div class="h1">Le client</div>
+              <div class="meta">À qui appartient cette batterie ?</div>
+            </div>
+            <div class="seg" role="tablist"><span>Client existant</span><span class="on">Nouveau client</span></div>
+            <div class="field">
+              <div class="field-l"><span>Nom</span><span class="req">Obligatoire</span></div>
+              <div class="input filled"><span class="ms" style="color:var(--teal)">person</span>M. Faure</div>
+            </div>
+            <div class="field">
+              <div class="field-l"><span>Adresse</span><span class="req">Obligatoire</span></div>
+              <div class="input filled"><span class="ms" style="color:var(--teal)">home_pin</span>8 rue Colin, 69100 Villeurbanne</div>
+              <span class="gps"><span class="ms s18">my_location</span>Pré-remplie avec ta position · modifiable</span>
+            </div>
+            <div class="or">facultatif, complétable plus tard</div>
+            <div class="field">
+              <div class="field-l"><span>Téléphone</span><span class="opt-l">Facultatif</span></div>
+              <div class="input"><span class="ms" style="color:var(--muted)">call</span><span class="ph-t">06 …</span></div>
+            </div>
+            <div class="field">
+              <div class="field-l"><span>Email</span><span class="opt-l">Facultatif</span></div>
+              <div class="input"><span class="ms" style="color:var(--muted)">mail</span><span class="ph-t">Pour inviter ton client dans son app</span></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+          <div class="body">
+            <div class="fx col gap4">
+              <div class="h1">Mode de pilotage</div>
+              <div class="meta">Modifiable plus tard depuis le système.</div>
+            </div>
+            <div class="stack">
+              <button class="opt on"><span class="pic pic-y"><span class="ms">wb_sunny</span></span><span class="fx col gap4" style="flex:1"><span class="fx ac gap8" style="flex-wrap:wrap"><span class="ot">Autoconsommation</span><span class="origin">Recommandé</span></span><span class="meta">Stocke le surplus solaire et le rend le soir.</span></span><span class="radio"></span></button>
+              <button class="opt"><span class="pic pic-t"><span class="ms">shield</span></span><span class="fx col gap4" style="flex:1"><span class="ot">Secours prioritaire</span><span class="meta">Garde toujours 30 % pour les coupures de courant.</span></span><span class="radio"></span></button>
+              <button class="opt"><span class="pic pic-g"><span class="ms">bedtime</span></span><span class="fx col gap4" style="flex:1"><span class="ot">Heures creuses</span><span class="meta">Recharge aussi sur le réseau la nuit, quand c'est moins cher.</span></span><span class="radio"></span></button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
+          <div class="body">
+            <div class="fx col gap4">
+              <div class="h1">Test de communication</div>
+              <div class="meta">On vérifie que la batterie envoie ses données.</div>
+            </div>
+            <div class="testbox">
+              <span class="ms s32 c-offline">cloud_off</span>
+              <div class="fx col gap4">
+                <span class="lbl">Pas de réponse pour l'instant</span>
+                <span class="meta">Courant dans une cave sans réseau. L'installation sera créée quand même, et on vérifiera plus tard.</span>
+              </div>
+            </div>
+            <div class="card fx ac gap12">
+              <span class="pic pic-y"><span class="ms">add_task</span></span>
+              <span class="meta">Une manip « Vérifier la communication » sera ajoutée à ta liste.</span>
+            </div>
+            <button class="btn btn-sec btn-block"><span class="ms">refresh</span>Réessayer</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStep5 }}" hint-placeholder-val="{{ false }}">
+          <div class="body">
+            <div class="hero">
+              <img class="mascot" src="./img/mascotte-muscle.jpg" width="140" height="140" alt="Mascotte Revolty qui montre ses muscles" />
+              <span class="ht">Installation créée</span>
+              <span class="meta">Chez M. Faure · Villeurbanne</span>
+            </div>
+            <div class="recap">
+              <div class="ri"><span class="ms c-ok">check_circle</span><span class="meta">Batterie RV-2409-1187 · 10 kWh</span></div>
+              <div class="ri"><span class="ms c-ok">check_circle</span><span class="meta">Client M. Faure, 8 rue Colin</span></div>
+              <div class="ri"><span class="ms c-ok">check_circle</span><span class="meta">Mode Autoconsommation</span></div>
+              <div class="ri"><span class="ms c-offline">cloud_off</span><span class="meta">Communication non vérifiée · manip ajoutée</span></div>
+            </div>
+            <section class="stack">
+              <h2 class="h2" style="margin:0">À compléter plus tard</h2>
+              <div class="chips">
+                <span class="chip"><span class="ms" style="color:var(--teal)">call</span>Téléphone</span>
+                <span class="chip"><span class="ms" style="color:var(--teal)">mail</span>Email</span>
+                <span class="chip"><span class="ms" style="color:var(--teal)">solar_power</span>Panneaux</span>
+                <span class="chip"><span class="ms" style="color:var(--teal)">photo_camera</span>Photos</span>
+              </div>
+            </section>
+          </div>
+        </sc-if>
+
+        <div class="dock" style="margin-top:auto">
+          <button class="btn btn-primary btn-block btn-xl">{{ cta }}</button>
+          <div class="home-ind"></div>
+        </div>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{
+  "step": { "editor": "enum", "options": ["1", "2", "3", "4", "5"], "default": "1", "tsType": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\"" }
+}'
+    >
+      class Component extends DCLogic {
+        renderVals() {
+          const step = Number(this.props.step ?? 1);
+          const cls = (n) => (n < step ? "done" : n === step ? "cur" : "");
+          const LABELS = { 1: "Étape 1 sur 5 · Batterie", 2: "Étape 2 sur 5 · Client", 3: "Étape 3 sur 5 · Mode de pilotage", 4: "Étape 4 sur 5 · Communication", 5: "Étape 5 sur 5 · Récapitulatif" };
+          const CTA = { 1: "Continuer", 2: "Continuer", 3: "Continuer", 4: "Passer, vérifier plus tard", 5: "Terminer" };
+          return {
+            s1: cls(1), s2: cls(2), s3: cls(3), s4: cls(4), s5: cls(5),
+            stepLabel: LABELS[step] ?? LABELS[1],
+            cta: CTA[step] ?? CTA[1],
+            isStep1: step === 1,
+            isStep2: step === 2,
+            isStep3: step === 3,
+            isStep4: step === 4,
+            isStep5: step === 5,
+          };
+        }
+      }
+    </script>
+  </body>
+</html>

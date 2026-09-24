@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0..1,0&amp;display=block" />
+        <link rel="stylesheet" href="./revolty.css" />
+        <style>
+          .chart { display: block; width: 100%; height: auto; }
+          .p-area { fill: #f5a524; fill-opacity: .22; stroke: #f5a524; stroke-width: 2; stroke-linejoin: round; }
+          .c-line { fill: none; stroke: #022818; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+          .surplus { fill: url(#rv-hatch-sun); }
+          .gap { fill: url(#rv-hatch-gap); }
+          .zero { stroke: #c9d3ce; stroke-width: 1; }
+          .grid { stroke: #edf1ef; stroke-width: 1; }
+          .ch { fill: #11e47a; }
+          .dis { fill: #037168; }
+          .soc-area { fill: #037168; fill-opacity: .10; }
+          .soc-line { fill: none; stroke: #037168; stroke-width: 2; }
+          .cur { stroke: #022818; stroke-width: 1.5; stroke-dasharray: 4 3; }
+          .now { stroke: #475467; stroke-width: 1.5; }
+          .since-l { stroke: #b54708; stroke-width: 2; stroke-dasharray: 4 3; }
+          .hs-sun { stroke: #f5a524; stroke-width: 2; }
+          .hs-gap { stroke: #98a2b3; stroke-width: 2; }
+          .gap-bg { fill: #f2f4f7; }
+          .sw-sun { background: #f5a524; }
+          .sw-cons { background: #022818; height: 3px !important; border-radius: 2px; }
+          .sw-sur { background: repeating-linear-gradient(45deg, #f5a524 0 2px, transparent 2px 5px); border: 1px solid #f5a524; }
+          .sw-ch { background: #11e47a; }
+          .sw-dis { background: #037168; }
+          .sw-gap { background: repeating-linear-gradient(45deg, #98a2b3 0 2px, #f2f4f7 2px 5px); border: 1px solid #98a2b3; }
+          .dayt { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+          .cnote { padding: 0 14px 4px; font-size: 15px; font-weight: 700; }
+        </style>
+      </helmet>
+      <div class="phone" data-screen-label="Données">
+        <div class="topbar">
+          <div class="sb"><span>9:41</span><span class="fx ac gap4"><span class="ms s18">signal_cellular_alt</span><span class="ms s18">battery_full</span></span></div>
+          <div class="row"><button class="back"><span class="ms">chevron_left</span>{{ who }}</button><span class="title">Données</span></div>
+        </div>
+
+        <div class="body" style="gap:16px">
+          <div class="{{ vClass }}">
+            <span class="ms s28">{{ vIcon }}</span>
+            <div class="fx col gap4">
+              <span class="vt">{{ vTitle }}</span>
+              <span class="meta">{{ vSub }}</span>
+              <span class="meta muted" style="font-size:15px">{{ lastData }}</span>
+            </div>
+          </div>
+
+          <div class="dayt"><h2 class="h2" style="margin:0">{{ dayTitle }}</h2><sc-if value="{{ badge }}" hint-placeholder-val="{{ false }}"><span class="incomplete">{{ badge }}</span></sc-if></div>
+
+          <div class="chart-card">
+            <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+              <defs>
+                <pattern id="rv-hatch-sun" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" class="hs-sun"></line></pattern>
+                <pattern id="rv-hatch-gap" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)"><rect x="0" y="0" width="7" height="7" class="gap-bg"></rect><line x1="0" y1="0" x2="0" y2="7" class="hs-gap"></line></pattern>
+              </defs>
+            </svg>
+
+            <sc-if value="{{ showCursor }}" hint-placeholder-val="{{ true }}">
+              <div class="cursor num">
+                <b>{{ cur.t }}</b><span>Production {{ cur.p }} · Conso {{ cur.c }}</span>
+                <span></span><span>Batterie {{ cur.b }} · Charge {{ cur.s }}</span>
+              </div>
+            </sc-if>
+
+            <div class="chart-t"><span>Production et conso</span><span class="muted" style="font-weight:600">kW</span></div>
+            <div class="legend pad" style="margin-bottom:6px">
+              <span><i class="sw-sun"></i>Production</span><span><i class="sw-cons"></i>Conso</span><span><i class="sw-sur"></i>Surplus</span>
+              <sc-if value="{{ hasWait }}" hint-placeholder-val="{{ false }}"><span><i class="sw-gap"></i>En attente de remontée</span></sc-if>
+            </div>
+            <svg class="chart" viewBox="0 0 358 130" role="img" aria-label="Production et consommation">
+              <line x1="0" y1="124" x2="358" y2="124" class="zero"></line>
+              <line x1="0" y1="68" x2="358" y2="68" class="grid"></line>
+              <path d="{{ gap1 }}" class="gap"></path>
+              <path d="{{ prodPath }}" class="p-area"></path>
+              <path d="{{ surPath }}" class="surplus"></path>
+              <path d="{{ consPath }}" class="c-line"></path>
+              <path d="{{ curPath1 }}" class="cur"></path>
+              <path d="{{ nowPath1 }}" class="now"></path>
+            </svg>
+
+            <div class="chart-t"><span>Batterie</span><span class="legend"><span><i class="sw-ch"></i>▲ Charge</span><span><i class="sw-dis"></i>▼ Décharge</span></span></div>
+            <sc-if value="{{ battEmpty }}" hint-placeholder-val="{{ false }}"><div class="cnote c-danger">{{ battEmpty }}</div></sc-if>
+            <svg class="chart" viewBox="0 0 358 100" role="img" aria-label="Charge et décharge de la batterie">
+              <path d="{{ gap2 }}" class="gap"></path>
+              <line x1="0" y1="50" x2="358" y2="50" class="zero"></line>
+              <path d="{{ chPath }}" class="ch"></path>
+              <path d="{{ disPath }}" class="dis"></path>
+              <path d="{{ curPath2 }}" class="cur"></path>
+              <path d="{{ nowPath2 }}" class="now"></path>
+            </svg>
+
+            <div class="chart-t"><span>État de charge</span><span class="muted" style="font-weight:600">0 – 100 %</span></div>
+            <svg class="chart" viewBox="0 0 358 70" role="img" aria-label="État de charge">
+              <path d="{{ gap3 }}" class="gap"></path>
+              <line x1="0" y1="64" x2="358" y2="64" class="zero"></line>
+              <line x1="0" y1="6" x2="358" y2="6" class="grid"></line>
+              <path d="{{ socArea }}" class="soc-area"></path>
+              <path d="{{ socPath }}" class="soc-line"></path>
+              <path d="{{ curPath3 }}" class="cur"></path>
+              <path d="{{ nowPath3 }}" class="now"></path>
+            </svg>
+            <div class="axis"><span>0 h</span><span>6 h</span><span>12 h</span><span>18 h</span><span>24 h</span></div>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><span class="k">Produit</span><span class="v">{{ k.P }} <small>kWh</small></span></div>
+            <div class="kpi"><span class="k">Consommé</span><span class="v">{{ k.C }} <small>kWh</small></span></div>
+            <div class="kpi"><span class="k">Chargé</span><span class="v">{{ k.Ch }} <small>kWh</small></span><span class="{{ k.chHintClass }}">{{ k.chHint }}</span></div>
+            <div class="kpi"><span class="k">Déchargé</span><span class="v">{{ k.Dis }} <small>kWh</small></span><span class="h">{{ k.disHint }}</span></div>
+            <div class="kpi"><span class="k">Autoproduction</span><span class="v">{{ k.ap }} <small>%</small></span><span class="h">de la conso couverte par le solaire</span></div>
+            <div class="kpi"><span class="k">Autoconsommation</span><span class="v">{{ k.ac }} <small>%</small></span><span class="h">de la production consommée sur place</span></div>
+            <div class="kpi"><span class="k">Charge mini / maxi</span><span class="v">{{ k.smin }} / {{ k.smax }} <small>%</small></span></div>
+            <div class="kpi"><span class="k">Dernière donnée</span><span class="v" style="font-size:20px">{{ lastShort }}</span></div>
+          </div>
+
+          <section class="chart-card">
+            <div class="chart-t" style="margin-top:0"><span style="font-size:17px">8 derniers jours</span><span class="legend"><span><i class="sw-ch"></i>Chargé</span><span><i class="sw-dis"></i>Déchargé</span></span></div>
+            <svg class="chart" viewBox="0 0 358 96" role="img" aria-label="Énergie chargée et déchargée par jour">
+              <path d="{{ fGap }}" class="gap"></path>
+              <line x1="0" y1="48" x2="358" y2="48" class="zero"></line>
+              <path d="{{ fCh }}" class="ch"></path>
+              <path d="{{ fDis }}" class="dis"></path>
+              <path d="{{ fSince }}" class="since-l"></path>
+            </svg>
+            <div class="days">
+              <sc-for list="{{ days }}" as="d" hint-placeholder-count="8">
+                <button class="{{ d.cls }}" onClick="{{ d.onClick }}"><span class="ms flag">{{ d.flag }}</span><span>{{ d.dow }}</span><b>{{ d.num }}</b></button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ sinceText }}" hint-placeholder-val="{{ true }}">
+              <div class="since"><span class="ms s20">warning</span>{{ sinceText }}</div>
+            </sc-if>
+            <div class="pad" style="margin-top:12px"><button class="btn btn-sec btn-block"><span class="ms">chevron_left</span>Semaine précédente</button></div>
+          </section>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{
+  "system": { "editor": "enum", "options": ["petit", "roux"], "default": "petit", "tsType": "\"petit\" | \"roux\"" },
+  "cursor": { "editor": "boolean", "default": true, "tsType": "boolean" }
+}'
+    >
+      class Component extends DCLogic {
+        constructor(props) {
+          super(props);
+          this.state = { sel: null };
+        }
+
+        model(sys) {
+          if (this._m && this._mSys === sys) return this._m;
+          const N = 96;
+          const gauss = (h, m, s) => Math.exp(-((h - m) * (h - m)) / (2 * s * s));
+          const prodAt = (h, f) => (h < 7.2 || h > 19.8 ? 0 : 4.2 * f * Math.pow(Math.sin((Math.PI * (h - 7.2)) / 12.6), 1.4));
+          const consAt = (h, sd) => Math.max(0.2, 0.32 + 1.0 * gauss(h, 7.4, 0.55) + 0.55 * gauss(h, 12.6, 0.8) + 1.7 * gauss(h, 19.9, 1.1) + 0.1 * Math.sin(h * 2.7 + sd) + 0.06 * Math.sin(h * 7.3 + sd * 2));
+          const F = [1.0, 0.85, 0.62, 0.95, 0.93, 0.9, 0.97, 0.88];
+          let soc = 3.0;
+          const days = [];
+          for (let d = 0; d < 8; d++) {
+            const broken = sys === "petit" && d >= 4;
+            if (broken) soc = 0.8;
+            const p = [], c = [], b = [], s = [], mask = [];
+            for (let i = 0; i < N; i++) {
+              const h = (i + 0.5) / 4;
+              const pi = prodAt(h, F[d]);
+              const ci = consAt(h, d * 1.7 + (sys === "petit" ? 0 : 0.9));
+              let bi = 0;
+              if (!broken) {
+                const sur = pi - ci;
+                bi = sur > 0 ? Math.min(sur, 3.3, (10 - soc) / 0.25) : -Math.min(-sur, 3.3, Math.max(0, soc - 0.5) / 0.25);
+              }
+              soc = Math.min(10, Math.max(0, soc + bi * 0.25));
+              let st = "ok";
+              if (d === 7) {
+                if (i >= 60) st = "future";
+                else if (sys === "roux" && i >= 4) st = "wait";
+              }
+              p.push(pi); c.push(ci); b.push(bi); s.push(soc * 10); mask.push(st);
+            }
+            days.push({ p, c, b, s, mask, broken });
+          }
+          this._m = days;
+          this._mSys = sys;
+          return days;
+        }
+
+        totals(day) {
+          let P = 0, C = 0, Ch = 0, Dis = 0, Imp = 0, Exp = 0, smin = 100, smax = 0, n = 0, gap = false;
+          for (let i = 0; i < 96; i++) {
+            if (day.mask[i] === "wait" || day.mask[i] === "lost") gap = true;
+            if (day.mask[i] !== "ok") continue;
+            n++;
+            const p = day.p[i], c = day.c[i], b = day.b[i];
+            P += p * 0.25; C += c * 0.25;
+            if (b > 0) Ch += b * 0.25; else Dis += -b * 0.25;
+            const g = c + b - p;
+            if (g > 0) Imp += g * 0.25; else Exp += -g * 0.25;
+            smin = Math.min(smin, day.s[i]); smax = Math.max(smax, day.s[i]);
+          }
+          return { P, C, Ch, Dis, ap: C > 0 ? (C - Imp) / C : 0, ac: P > 0 ? (P - Exp) / P : 0, smin, smax, n, gap };
+        }
+
+        renderVals() {
+          const sys = this.props.system ?? "petit";
+          const days = this.model(sys);
+          const W = 358, N = 96;
+          const sel = this.state.sel ?? (sys === "petit" ? 6 : 7);
+          const day = days[sel];
+          const x = (i) => ((i + 0.5) / N) * W;
+          const xe = (i) => (i / N) * W;
+          const f1 = (v) => v.toFixed(1);
+          const y1 = (v) => 124 - (v / 5) * 112;
+          const y3 = (v) => 64 - (v / 100) * 58;
+          const fr = (v, dg) => v.toFixed(dg ?? 1).replace(".", ",");
+
+          const runs = (pred) => {
+            const out = []; let a = -1;
+            for (let i = 0; i <= N; i++) {
+              const ok = i < N && pred(i);
+              if (ok && a < 0) a = i;
+              if (!ok && a >= 0) { out.push([a, i - 1]); a = -1; }
+            }
+            return out;
+          };
+          const ok = (i) => day.mask[i] === "ok";
+
+          let prodPath = "", consPath = "", surPath = "", socPath = "", socArea = "";
+          runs(ok).forEach(([a, b]) => {
+            prodPath += "M" + f1(xe(a)) + " " + f1(y1(0));
+            consPath += "M" + f1(x(a)) + " " + f1(y1(day.c[a]));
+            socPath += "M" + f1(x(a)) + " " + f1(y3(day.s[a]));
+            socArea += "M" + f1(xe(a)) + " 64";
+            for (let i = a; i <= b; i++) {
+              prodPath += "L" + f1(x(i)) + " " + f1(y1(day.p[i]));
+              if (i > a) { consPath += "L" + f1(x(i)) + " " + f1(y1(day.c[i])); socPath += "L" + f1(x(i)) + " " + f1(y3(day.s[i])); }
+              socArea += "L" + f1(x(i)) + " " + f1(y3(day.s[i]));
+            }
+            prodPath += "L" + f1(xe(b + 1)) + " " + f1(y1(0)) + "Z";
+            socArea += "L" + f1(xe(b + 1)) + " 64Z";
+          });
+          runs((i) => ok(i) && day.p[i] > day.c[i]).forEach(([a, b]) => {
+            surPath += "M" + f1(x(a)) + " " + f1(y1(day.p[a]));
+            for (let i = a + 1; i <= b; i++) surPath += "L" + f1(x(i)) + " " + f1(y1(day.p[i]));
+            for (let i = b; i >= a; i--) surPath += "L" + f1(x(i)) + " " + f1(y1(day.c[i]));
+            surPath += "Z";
+          });
+
+          let chPath = "", disPath = "";
+          const bw = W / N - 1;
+          for (let i = 0; i < N; i++) {
+            if (!ok(i)) continue;
+            const v = day.b[i];
+            if (Math.abs(v) < 0.03) continue;
+            const hgt = Math.min(44, (Math.abs(v) / 3.3) * 44);
+            const x0 = xe(i) + 0.5;
+            const seg = "M" + f1(x0) + " 50V" + f1(v > 0 ? 50 - hgt : 50 + hgt) + "H" + f1(x0 + bw) + "V50Z";
+            if (v > 0) chPath += seg; else disPath += seg;
+          }
+
+          const gapRuns = runs((i) => day.mask[i] === "wait" || day.mask[i] === "lost");
+          const band = (H) => gapRuns.map(([a, b]) => "M" + f1(xe(a)) + " 0H" + f1(xe(b + 1)) + "V" + H + "H" + f1(xe(a)) + "Z").join("");
+          const nowIdx = sel === 7 ? 60 : -1;
+          const vline = (i, H) => (i < 0 ? "" : "M" + f1(xe(i)) + " 0V" + H);
+
+          const ci = 52;
+          const showCursor = (this.props.cursor ?? true) && ok(ci);
+          const cur = {
+            t: "13 h",
+            p: fr(day.p[ci]) + " kW",
+            c: fr(day.c[ci]) + " kW",
+            b: (day.b[ci] > 0.03 ? "charge " + fr(day.b[ci]) : day.b[ci] < -0.03 ? "décharge " + fr(-day.b[ci]) : "0,0") + " kW",
+            s: Math.round(day.s[ci]) + " %",
+          };
+          const cx = showCursor ? x(ci) : -1;
+          const cline = (H) => (cx < 0 ? "" : "M" + f1(cx) + " 0V" + H);
+
+          const tt = this.totals(day);
+          const normal = days.filter((d, idx) => !d.broken && idx < 7).map((d) => this.totals(d));
+          const habCh = normal.reduce((a, t) => a + t.Ch, 0) / Math.max(1, normal.length);
+          const habDis = normal.reduce((a, t) => a + t.Dis, 0) / Math.max(1, normal.length);
+          const k = {
+            P: fr(tt.P), C: fr(tt.C), Ch: fr(tt.Ch), Dis: fr(tt.Dis),
+            ap: tt.gap ? "—" : Math.round(tt.ap * 100),
+            ac: tt.gap ? "—" : Math.round(tt.ac * 100),
+            smin: Math.round(tt.smin), smax: Math.round(tt.smax),
+            chHint: "habituel : " + fr(habCh), chHintClass: day.broken ? "h bad" : "h",
+            disHint: "habituel : " + fr(habDis),
+          };
+
+          const T = days.map((d) => this.totals(d));
+          const cw = W / 8;
+          let fCh = "", fDis = "", fGap = "";
+          T.forEach((t, d) => {
+            const c = cw * d + cw / 2;
+            const hc = Math.max(t.Ch > 0.05 ? 2 : 0, (t.Ch / 11) * 42);
+            const hd = Math.max(t.Dis > 0.05 ? 2 : 0, (t.Dis / 11) * 42);
+            if (hc > 0) fCh += "M" + f1(c - 13) + " 48V" + f1(48 - hc) + "H" + f1(c - 1) + "V48Z";
+            if (hd > 0) fDis += "M" + f1(c + 1) + " 48V" + f1(48 + hd) + "H" + f1(c + 13) + "V48Z";
+            if (t.gap) fGap += "M" + f1(cw * d + 3) + " 0H" + f1(cw * (d + 1) - 3) + "V96H" + f1(cw * d + 3) + "Z";
+          });
+          const fSince = sys === "petit" ? "M" + f1(cw * 4) + " 0V96" : "";
+
+          const DOW = ["jeu.", "ven.", "sam.", "dim.", "lun.", "mar.", "mer.", "auj."];
+          const LONG = ["Jeu. 17 sept.", "Ven. 18 sept.", "Sam. 19 sept.", "Dim. 20 sept.", "Lun. 21 sept.", "Mar. 22 sept.", "Hier · mer. 23 sept.", "Aujourd'hui · jeu. 24 sept."];
+          const dayList = DOW.map((dow, d) => ({
+            dow, num: 17 + d,
+            flag: days[d].broken ? "warning" : T[d].gap ? "cloud_off" : "",
+            cls: d === sel ? "day sel" : "day",
+            onClick: () => this.setState({ sel: d }),
+          }));
+
+          let vClass = "verdict v-ok", vIcon = "check_circle";
+          let vTitle = "La batterie a travaillé normalement";
+          let vSub = "Chargée en journée avec le surplus, déchargée le soir.";
+          if (day.broken) {
+            vClass = "verdict v-danger"; vIcon = "error";
+            vTitle = "La batterie ne se charge plus alors que les panneaux produisent";
+            vSub = "Anormal depuis lun. 21 sept.";
+          } else if (tt.gap) {
+            vClass = "verdict v-offline"; vIcon = "cloud_off";
+            vTitle = "Données insuffisantes pour aujourd'hui";
+            vSub = "Sans nouvelles depuis 01:00. La batterie garde ses données : elles remonteront au retour de la connexion.";
+          } else if (sel === 7) {
+            vSub = "Journée en cours : chargée ce matin avec le surplus.";
+          }
+
+          return {
+            who: sys === "petit" ? "Mme Petit" : "M. Roux",
+            vClass, vIcon, vTitle, vSub,
+            lastData: sys === "petit" ? "Dernière donnée : il y a 12 min" : "Dernière donnée : aujourd'hui à 01:00 (il y a 14 h)",
+            lastShort: sys === "petit" ? "il y a 12 min" : "il y a 14 h",
+            dayTitle: LONG[sel],
+            badge: tt.gap ? "incomplet" : sel === 7 ? "en cours" : "",
+            showCursor, cur,
+            prodPath, consPath, surPath, chPath, disPath, socPath, socArea,
+            hasWait: gapRuns.length > 0,
+            battEmpty: day.broken ? "Aucune charge ni décharge ce jour-là" : "",
+            gap1: band(130), gap2: band(100), gap3: band(70),
+            curPath1: cline(130), curPath2: cline(100), curPath3: cline(70),
+            nowPath1: vline(nowIdx, 130), nowPath2: vline(nowIdx, 100), nowPath3: vline(nowIdx, 70),
+            k,
+            fCh, fDis, fGap, fSince,
+            days: dayList,
+            sinceText: sys === "petit" ? "Anormal depuis lun. 21 sept." : "",
+          };
+        }
+      }
+    </script>
+  </body>
+</html>

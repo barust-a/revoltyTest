@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <meta name="design_doc_mode" content="canvas" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0..1,0&amp;display=block" />
+        <link rel="stylesheet" href="./revolty.css" />
+        <style>
+          body { margin: 0; background: #f4f1e4; font-family: "Inter", system-ui, sans-serif; color: #1f2a24; }
+          a { color: #037168; }
+          a:hover { color: #022818; }
+          .dv-turn { padding: 40px 44px 36px; border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
+          .dv-thd { display: flex; align-items: baseline; gap: 12px; margin: 0 0 8px; }
+          .dv-tid { font: 600 11px ui-monospace, Menlo, monospace; padding: 3px 7px; background: #037168; color: #fff; border-radius: 4px; text-decoration: none; }
+          .dv-tname { font: 700 22px/1.2 "Space Grotesk", sans-serif; color: #037168; }
+          .dv-why { font-size: 15px; color: #4a5568; max-width: 860px; margin: 0 0 22px; text-wrap: pretty; }
+          .dv-opts { display: flex; flex-wrap: wrap; gap: 36px; align-items: flex-start; }
+          .dv-opt { flex: none; display: flex; flex-direction: column; gap: 10px; }
+          .dv-oid { font: 600 11px ui-monospace, Menlo, monospace; padding: 3px 7px; background: rgba(0, 0, 0, 0.08); color: #1a1a1a; border-radius: 5px; text-decoration: none; }
+          .dv-olabel { display: flex; align-items: baseline; gap: 8px; font: 500 13px/1.3 Inter, sans-serif; color: rgba(0, 0, 0, 0.62); max-width: 400px; }
+          .dv-opt:target .dv-oid { background: #037168; color: #fff; }
+          .dv-next { margin: 24px 0 0; font: 13px/1.5 Inter, sans-serif; color: rgba(0, 0, 0, 0.55); }
+          .ds { background: #fff; border-radius: 20px; padding: 24px; width: 1300px; max-width: 100%; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 28px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+          .ds h3 { margin: 0 0 12px; font: 700 15px "Space Grotesk", sans-serif; color: #037168; text-transform: uppercase; letter-spacing: .05em; }
+          .sws { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+          .sw { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #4a5568; }
+          .sw b { font-size: 13px; color: #022818; }
+          .sw i { height: 44px; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); display: block; }
+          .dsl { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.5; color: #3f4a5a; display: flex; flex-direction: column; gap: 6px; }
+          .dsl b { color: #022818; }
+          .states { display: flex; flex-direction: column; gap: 8px; }
+          .stt { display: flex; align-items: center; gap: 10px; border-radius: 12px; padding: 8px 12px; font-size: 15px; }
+          .mrow { display: flex; gap: 10px; align-items: flex-end; margin-top: 14px; background: #e8fff3; border-radius: 14px; padding: 8px 12px; }
+          .mrow span { font-size: 12px; color: #4a5568; }
+        </style>
+      </helmet>
+
+      <section class="dv-turn" id="t0" data-screen-label="Système visuel">
+        <div class="dv-thd"><a class="dv-tid" href="#t0">0</a><span class="dv-tname">Revolty — App installateur · v2 chaleureuse</span></div>
+        <p class="dv-why">Reprend l'ADN de revolty.fr : fond menthe, en-têtes teal, jaune pastel pour les moments positifs, pastilles d'icônes par type de manip, mascotte batterie dans les moments de respiration. Les alertes restent les éléments les plus saturés de l'écran, le texte reste foncé. Version précédente conservée dans <code>v1/Revolty Installateur v1.dc.html</code>.</p>
+        <div class="ds">
+          <div>
+            <h3>Couleurs</h3>
+            <div class="sws">
+              <div class="sw"><i style="background:#e8fff3"></i><b>mint</b>#e8fff3 · fond d'app</div>
+              <div class="sw"><i style="background:#037168"></i><b>teal</b>#037168 · en-têtes, titres</div>
+              <div class="sw"><i style="background:#fbf59e"></i><b>yellow</b>#fbf59e · moments positifs</div>
+              <div class="sw"><i style="background:#11e47a"></i><b>primary</b>#11e47a · action principale</div>
+              <div class="sw"><i style="background:#c4f5d9"></i><b>mint-strong</b>#c4f5d9 · pastilles, sélection</div>
+              <div class="sw"><i style="background:#022818"></i><b>forest</b>#022818 · texte fort</div>
+              <div class="sw"><i style="background:#d92d20"></i><b>danger</b>#d92d20 · En panne</div>
+              <div class="sw"><i style="background:#b54708"></i><b>warning</b>#b54708 · À surveiller</div>
+              <div class="sw"><i style="background:#667085"></i><b>offline</b>#667085 · Sans nouvelles</div>
+              <div class="sw"><i style="background:#f5a524"></i><b>solar</b>#f5a524 · production</div>
+            </div>
+            <div class="mrow">
+              <img class="mascot" src="./img/mascotte-cool.jpg" width="64" height="59" alt="" /><span>tout va bien</span>
+              <img class="mascot" src="./img/mascotte-bravo.jpg" width="64" height="60" alt="" /><span>clôture réussie</span>
+              <img class="mascot" src="./img/mascotte-muscle.jpg" width="60" height="60" alt="" /><span>installation créée</span>
+            </div>
+          </div>
+          <div>
+            <h3>États de santé</h3>
+            <div class="states">
+              <div class="stt t-danger" style="border-width:2px;border-style:solid"><span class="ms">error</span><b>En panne</b>· alerte grave active</div>
+              <div class="stt t-offline"><span class="ms">cloud_off</span><b>Sans nouvelles</b>· aucune donnée depuis 12 h</div>
+              <div class="stt t-warn" style="border-width:2px;border-style:solid"><span class="ms">warning</span><b>À surveiller</b>· alerte mineure</div>
+              <div class="stt t-ok"><span class="ms">check_circle</span><b>OK</b>· discret, sans aplat</div>
+            </div>
+            <h3 style="margin-top:18px">Pastilles de manip</h3>
+            <div class="fx gap8" style="flex-wrap:wrap">
+              <span class="pic pic-g"><span class="ms">bolt</span></span>
+              <span class="pic pic-y"><span class="ms">donut_large</span></span>
+              <span class="pic pic-t"><span class="ms">battery_charging_full</span></span>
+              <span class="pic pic-y"><span class="ms">call</span></span>
+              <span class="pic pic-t"><span class="ms">wifi</span></span>
+            </div>
+          </div>
+          <div>
+            <h3>Règles terrain</h3>
+            <ul class="dsl">
+              <li><b>Cibles</b> 56 dp mini · Résolu / Pas résolu 104 · bouton bas 72, fixé</li>
+              <li><b>Texte</b> 17 mini, toujours foncé · Space Grotesk titres, Inter texte</li>
+              <li><b>Aucun geste fin</b> : pas de swipe, d'appui long ni de pinch</li>
+              <li><b>Couleur de santé = couleur + icône + libellé</b>, et toujours la plus saturée de l'écran</li>
+              <li><b>Jaune jamais à côté de l'ambre</b> « À surveiller »</li>
+              <li><b>Pas de mascotte</b> sur les écrans de travail (clôture en cours, alertes)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="dv-turn" id="t1" data-screen-label="Accueil">
+        <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Accueil — l'état du parc et ce qu'il a à faire, sur un seul fil</span></div>
+        <p class="dv-why">Bandeau de santé touchable → « À faire », urgentes en tête, chaque manip avec sa pastille d'icône → parc trié par gravité, les OK repliés. Les jours calmes, la mascotte remplace le bandeau.</p>
+        <div class="dv-opts">
+          <div class="dv-opt" id="1a">
+            <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>En ligne · journée chargée</div>
+            <dc-import name="Accueil" mode="normal" hint-size="410px,2080px"></dc-import>
+          </div>
+          <div class="dv-opt" id="1b">
+            <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Hors ligne + coupure : 7 systèmes de Bron regroupés, une clôture en attente d'envoi et encore modifiable</div>
+            <dc-import name="Accueil" mode="offline" hint-size="410px,2160px"></dc-import>
+          </div>
+          <div class="dv-opt" id="1c">
+            <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Journée calme : tout va bien, rien à faire</div>
+            <dc-import name="Accueil" mode="calm" hint-size="410px,1000px"></dc-import>
+          </div>
+        </div>
+      </section>
+
+      <section class="dv-turn" id="t2" data-screen-label="Système et données">
+        <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Détail d'un système et ses données</span></div>
+        <p class="dv-why">L'alerte en français, « Pour le client » sur fond jaune, « À vérifier » sur fond menthe. Données : verdict en une phrase, 3 graphes empilés sur le même axe horaire, chiffres clés comparés à l'habituel, frise 8 jours cliquable. Un trou de données n'est jamais un zéro.</p>
+        <div class="dv-opts">
+          <div class="dv-opt" id="2a">
+            <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Système · Mme Petit, en panne</div>
+            <dc-import name="Systeme" hint-size="410px,2200px"></dc-import>
+          </div>
+          <div class="dv-opt" id="2b">
+            <div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Données · Mme Petit, hier : le surplus est là, la batterie ne charge pas. Touche un jour de la frise.</div>
+            <dc-import name="Donnees" system="petit" hint-size="410px,2080px"></dc-import>
+          </div>
+          <div class="dv-opt" id="2c">
+            <div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>Données · M. Roux, aujourd'hui : trou « en attente de remontée », totaux marqués incomplets</div>
+            <dc-import name="Donnees" system="roux" hint-size="410px,2080px"></dc-import>
+          </div>
+        </div>
+      </section>
+
+      <section class="dv-turn" id="t3" data-screen-label="Clôture">
+        <div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Clôture d'une manip — 2 minutes, gants, sans clavier</span></div>
+        <p class="dv-why">Un seul choix obligatoire (Résolu / Pas résolu, visibles sans défiler), puces d'actions selon le type de manip, 2 photos, note dictée avec repli mémo audio. Une fois envoyée : la mascotte félicite, et la manip suivante est proposée.</p>
+        <div class="dv-opts">
+          <div class="dv-opt" id="3a">
+            <div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>Résolu</div>
+            <dc-import name="Cloture" result="resolu" hint-size="410px,1400px"></dc-import>
+          </div>
+          <div class="dv-opt" id="3b">
+            <div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>Pas résolu : la suite est demandée tout de suite</div>
+            <dc-import name="Cloture" result="pas_resolu" hint-size="410px,1650px"></dc-import>
+          </div>
+          <div class="dv-opt" id="3c">
+            <div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a>Clôturée et envoyée</div>
+            <dc-import name="Cloture" result="envoyee" hint-size="410px,1100px"></dc-import>
+          </div>
+        </div>
+      </section>
+
+      <section class="dv-turn" id="t4" data-screen-label="Nouvelle installation">
+        <div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">Nouvelle installation — 5 étapes, moins de 5 minutes</span></div>
+        <p class="dv-why">Obligatoire : n° de série (étape 1) et client, nom + adresse (étape 2). Mode pré-coché « Autoconsommation ». Le test de communication est une vraie étape, jamais bloquante. Récapitulatif avec ce qui reste à compléter plus tard.</p>
+        <div class="dv-opts">
+          <div class="dv-opt" id="4a">
+            <div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a>Étape 1 · scan de l'étiquette</div>
+            <dc-import name="Installation" step="1" hint-size="410px,1000px"></dc-import>
+          </div>
+          <div class="dv-opt" id="4e">
+            <div class="dv-olabel"><a class="dv-oid" href="#4e">4e</a>Étape 2 · le client : nom et adresse obligatoires, adresse pré-remplie par la position</div>
+            <dc-import name="Installation" step="2" hint-size="410px,1100px"></dc-import>
+          </div>
+          <div class="dv-opt" id="4b">
+            <div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a>Étape 3 · mode de pilotage</div>
+            <dc-import name="Installation" step="3" hint-size="410px,1000px"></dc-import>
+          </div>
+          <div class="dv-opt" id="4c">
+            <div class="dv-olabel"><a class="dv-oid" href="#4c">4c</a>Étape 4 · pas de réseau en cave : on passe</div>
+            <dc-import name="Installation" step="4" hint-size="410px,1000px"></dc-import>
+          </div>
+          <div class="dv-opt" id="4d">
+            <div class="dv-olabel"><a class="dv-oid" href="#4d">4d</a>Étape 5 · installation créée</div>
+            <dc-import name="Installation" step="5" hint-size="410px,1100px"></dc-import>
+          </div>
+        </div>
+      </section>
+    </x-dc>
+    <script type="text/x-dc" data-dc-script data-props='{}'>
+      class Component extends DCLogic {
+        renderVals() { return {}; }
+      }
+    </script>
+  </body>
+</html>

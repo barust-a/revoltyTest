@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0..1,0&amp;display=block" />
+        <link rel="stylesheet" href="./revolty.css" />
+      </helmet>
+      <div class="phone" data-screen-label="Accueil">
+        <div class="hdr">
+          <div class="sb" style="padding:0 6px"><span>9:41</span><span class="fx ac gap4"><span class="ms s18">signal_cellular_alt</span><span class="ms s18">battery_full</span></span></div>
+          <div class="fx jb ac gap12" style="margin-top:6px">
+            <div class="fx col gap4">
+              <div class="h1">Bonjour Karim</div>
+              <div class="sub">Jeudi 24 septembre</div>
+            </div>
+            <button class="btn btn-yellow"><span class="ms">add</span>Installer</button>
+          </div>
+          <sc-if value="{{ online }}" hint-placeholder-val="{{ true }}">
+            <div class="net ok"><span class="dot"></span><span>En ligne · à jour à 14:58</span></div>
+          </sc-if>
+          <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+            <div class="net off">
+              <span class="ms">wifi_off</span>
+              <div><b>Hors ligne</b> · données de 14:32<br />2 clôtures en attente d'envoi</div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div class="body">
+          <sc-if value="{{ calm }}" hint-placeholder-val="{{ false }}">
+            <div class="good">
+              <img class="mascot" src="./img/mascotte-cool.jpg" width="92" height="85" alt="Mascotte Revolty détendue" />
+              <div class="fx col gap4">
+                <span class="gt">Tes 20 systèmes vont bien</span>
+                <span class="meta">Rien d'anormal depuis ta dernière visite.</span>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ busy }}" hint-placeholder-val="{{ true }}">
+            <div class="health" aria-label="État du parc">
+              <button class="tile t-danger">
+                <span class="top"><span class="n num">{{ nPanne }}</span><span class="ms s28">error</span></span>
+                <span class="t">En panne</span>
+              </button>
+              <button class="tile t-offline">
+                <span class="top"><span class="n num">{{ nSilence }}</span><span class="ms s28">cloud_off</span></span>
+                <span class="t">Sans nouvelles</span>
+              </button>
+              <button class="tile t-warn">
+                <span class="top"><span class="n num">{{ nWarn }}</span><span class="ms s28">warning</span></span>
+                <span class="t">À surveiller</span>
+              </button>
+              <button class="tile t-ok">
+                <span class="top"><span class="n num">{{ nOk }}</span><span class="ms s28">check_circle</span></span>
+                <span class="t">OK</span>
+              </button>
+            </div>
+          </sc-if>
+
+          <section class="stack">
+            <div class="sec-h"><h2 class="h2" style="margin:0">À faire</h2><span class="count">{{ nTodo }}</span></div>
+
+            <sc-if value="{{ calm }}" hint-placeholder-val="{{ false }}">
+              <div class="empty">
+                <span class="pic pic-y"><span class="ms">event_available</span></span>
+                <span class="lbl">Rien à faire pour l'instant</span>
+                <span class="meta muted">Les manips apparaîtront ici dès qu'une alerte ou Revolty en crée une.</span>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ busy }}" hint-placeholder-val="{{ true }}">
+              <div class="stack">
+                <div class="todo urgent">
+                  <div class="head"><span class="badge b-danger"><span class="ms s18">error</span>Urgent · via alerte</span><span class="origin">Alerte</span></div>
+                  <div class="main"><span class="pic pic-g"><span class="ms">bolt</span></span><div class="fx col"><span class="lbl">Remise en service</span><span class="meta">Mme Petit · Lyon 3</span></div></div>
+                  <sc-if value="{{ online }}" hint-placeholder-val="{{ true }}">
+                    <div class="foot"><span class="due"><span class="ms s20">event</span>Aujourd'hui</span><button class="btn btn-sec">Clôturer</button></div>
+                  </sc-if>
+                  <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+                    <div class="foot"><span class="badge b-sync"><span class="ms s18">schedule_send</span>En attente d'envoi</span><button class="btn btn-sec">Modifier</button></div>
+                  </sc-if>
+                </div>
+
+                <div class="todo urgent">
+                  <div class="head"><span class="badge b-danger"><span class="ms s18">error</span>Urgent · via alerte</span><span class="origin">Alerte</span></div>
+                  <div class="main"><span class="pic pic-g"><span class="ms">bolt</span></span><div class="fx col"><span class="lbl">Remise en service</span><span class="meta">M. Garnier · Bron</span></div></div>
+                  <div class="foot"><span class="due"><span class="ms s20">event</span>Demain</span><button class="btn btn-sec">Clôturer</button></div>
+                </div>
+
+                <div class="todo urgent">
+                  <div class="head"><span class="badge b-danger"><span class="ms s18">schedule</span>Urgent · 2 j de retard</span><span class="origin">Revolty</span></div>
+                  <div class="main"><span class="pic pic-t"><span class="ms">battery_charging_full</span></span><div class="fx col"><span class="lbl">Changer un module</span><span class="meta">M. Bernard · Écully</span></div></div>
+                  <div class="foot"><span class="due late"><span class="ms s20">event_busy</span>Prévu mar. 22</span><button class="btn btn-sec">Clôturer</button></div>
+                </div>
+
+                <div class="todo">
+                  <div class="main"><span class="pic pic-y"><span class="ms">donut_large</span></span><div class="fx col" style="flex:1"><span class="lbl">Vérifier le tore</span><span class="meta">M. Durand · Caluire</span></div><span class="origin" style="align-self:flex-start">Alerte</span></div>
+                  <div class="foot"><span class="due"><span class="ms s20">event</span>Jeu. 1er oct.</span><button class="btn btn-sec">Clôturer</button></div>
+                </div>
+
+                <div class="todo">
+                  <div class="main"><span class="pic pic-y"><span class="ms">call</span></span><div class="fx col" style="flex:1"><span class="lbl">Rappeler le client</span><span class="meta">M. Roux · Vienne</span></div><span class="origin" style="align-self:flex-start">Revolty</span></div>
+                  <div class="foot"><span class="due"><span class="ms s20">event</span>Ven. 2 oct.</span><button class="btn btn-sec">Clôturer</button></div>
+                </div>
+              </div>
+            </sc-if>
+          </section>
+
+          <section class="stack">
+            <div class="sec-h"><h2 class="h2" style="margin:0">Mon parc</h2><span class="count">20</span></div>
+            <div class="search"><span class="ms" style="color:var(--teal)">search</span>Client, ville ou n° de série</div>
+            <div class="plist">
+              <sc-if value="{{ busy }}" hint-placeholder-val="{{ true }}">
+                <div class="prow">
+                  <span class="ms s28 c-danger">error</span>
+                  <div class="who"><span class="name">Mme Petit · Lyon 3</span><span class="why"><span class="st c-danger">En panne</span> · La batterie ne se recharge plus</span></div>
+                  <span class="ms chev">chevron_right</span>
+                </div>
+                <div class="prow">
+                  <span class="ms s28 c-danger">error</span>
+                  <div class="who"><span class="name">M. Garnier · Bron</span><span class="why"><span class="st c-danger">En panne</span> · Batterie arrêtée depuis hier</span></div>
+                  <span class="ms chev">chevron_right</span>
+                </div>
+                <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+                  <div class="prow grouped">
+                    <span class="ms s28 c-offline">cloud_off</span>
+                    <div class="who"><span class="name">Coupure probable · Bron</span><span class="why">7 systèmes sans nouvelles depuis 14:05</span></div>
+                    <span class="ms chev">expand_more</span>
+                  </div>
+                </sc-if>
+                <div class="prow">
+                  <span class="ms s28 c-offline">cloud_off</span>
+                  <div class="who"><span class="name">M. Roux · Vienne</span><span class="why"><span class="st c-offline">Sans nouvelles</span> · depuis 14 h</span></div>
+                  <span class="ms chev">chevron_right</span>
+                </div>
+                <div class="prow">
+                  <span class="ms s28 c-warn">warning</span>
+                  <div class="who"><span class="name">M. Durand · Caluire</span><span class="why"><span class="st c-warn">À surveiller</span> · Mesure de conso incohérente</span></div>
+                  <span class="ms chev">chevron_right</span>
+                </div>
+              </sc-if>
+              <div class="prow">
+                <span class="ms s28 c-ok">check_circle</span>
+                <div class="who"><span class="name" style="font-weight:600">{{ okLabel }}</span></div>
+                <span class="ms chev">expand_more</span>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{
+  "mode": { "editor": "enum", "options": ["normal", "offline", "calm"], "default": "normal", "tsType": "\"normal\" | \"offline\" | \"calm\"" }
+}'
+    >
+      class Component extends DCLogic {
+        renderVals() {
+          const mode = this.props.mode ?? "normal";
+          const offline = mode === "offline";
+          const calm = mode === "calm";
+          return {
+            online: !offline,
+            offline,
+            calm,
+            busy: !calm,
+            nPanne: 2,
+            nSilence: offline ? 8 : 1,
+            nWarn: 1,
+            nOk: offline ? 9 : 16,
+            nTodo: calm ? 0 : 5,
+            okLabel: calm ? "20 systèmes OK" : offline ? "9 systèmes OK" : "16 systèmes OK",
+          };
+        }
+      }
+    </script>
+  </body>
+</html>

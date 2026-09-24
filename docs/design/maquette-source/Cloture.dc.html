@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0..1,0&amp;display=block" />
+        <link rel="stylesheet" href="./revolty.css" />
+      </helmet>
+      <div class="phone" data-screen-label="Clôture d'une manip">
+        <div class="topbar">
+          <div class="sb"><span>9:41</span><span class="fx ac gap4"><span class="ms s18">signal_cellular_alt</span><span class="ms s18">battery_full</span></span></div>
+          <sc-if value="{{ editing }}" hint-placeholder-val="{{ true }}">
+            <div class="row"><button class="back"><span class="ms">close</span>Annuler</button><span class="title">Clôturer la manip</span></div>
+            <div class="fx ac gap12" style="padding:0 16px 18px">
+              <span class="pic pic-g"><span class="ms">bolt</span></span>
+              <div class="fx col">
+                <span class="lbl" style="color:#fff">Remise en service</span>
+                <span class="meta">Mme Petit · Lyon 3 · arrivée 14:32</span>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+            <div class="row" style="padding-bottom:14px"><span class="title" style="padding-left:10px">Manip clôturée</span></div>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ editing }}" hint-placeholder-val="{{ true }}">
+          <div class="body" style="gap:24px">
+            <section class="stack">
+              <h2 class="h2" style="margin:0">Résultat</h2>
+              <div class="result">
+                <button class="{{ okCls }}"><span class="ms s40">check_circle</span>Résolu</button>
+                <button class="{{ koCls }}"><span class="ms s40">cancel</span>Pas résolu</button>
+              </div>
+            </section>
+
+            <sc-if value="{{ ko }}" hint-placeholder-val="{{ false }}">
+              <section class="stack">
+                <h2 class="h2" style="margin:0">Et maintenant ?</h2>
+                <button class="opt on"><span class="radio"></span><span class="fx col"><span class="ot">Je repasse</span><span class="meta">Nouvelle échéance : demain</span></span></button>
+                <button class="opt"><span class="radio"></span><span class="fx col"><span class="ot">Je transmets à Revolty</span><span class="meta">La manip reste dans « À faire » jusqu'à leur réponse</span></span></button>
+              </section>
+            </sc-if>
+
+            <section class="stack">
+              <h2 class="h2" style="margin:0">Ce que j'ai fait</h2>
+              <div class="chips">
+                <button class="chip on"><span class="ms">check</span>Disjoncteur réenclenché</button>
+                <button class="chip on"><span class="ms">check</span>Modules redémarrés</button>
+                <button class="chip">Câble de com. rebranché</button>
+                <button class="chip">Module remplacé</button>
+                <button class="chip"><span class="ms">add</span>Autre</button>
+              </div>
+            </section>
+
+            <section class="stack">
+              <div class="sec-h"><h2 class="h2" style="margin:0">Photos</h2><span class="count">1 / 2</span></div>
+              <div class="photos">
+                <div class="ph" style="min-height:120px">photo · tableau électrique</div>
+                <button class="photo-add"><span class="ms s32">photo_camera</span>Ajouter</button>
+              </div>
+            </section>
+
+            <section class="stack">
+              <h2 class="h2" style="margin:0">Note <span class="muted" style="font-size:16px;font-weight:600">(facultatif)</span></h2>
+              <div class="note">
+                <div class="memo"><span class="pic pic-y" style="width:40px;height:40px;border-radius:12px"><span class="ms s20">graphic_eq</span></span>Mémo vocal · 0:14</div>
+                <div class="meta">« Disjoncteur batterie tombé, réenclenché. Charge repartie à 14:40. »</div>
+              </div>
+              <button class="btn btn-sec btn-block"><span class="ms">mic</span>Dicter une note</button>
+            </section>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+          <div class="body">
+            <div class="hero">
+              <img class="mascot" src="./img/mascotte-bravo.jpg" width="150" height="140" alt="Mascotte Revolty pouce levé" />
+              <span class="ht">Bien joué, c'est clôturé</span>
+              <span class="meta">Remise en service · Mme Petit</span>
+            </div>
+            <div class="recap">
+              <div class="ri"><span class="ms c-ok">check_circle</span><span class="meta"><b style="color:var(--forest)">Résolu</b> · 2 actions · 1 photo · mémo vocal</span></div>
+              <div class="ri"><span class="ms c-ok">cloud_done</span><span class="meta">Envoyé à 14:41</span></div>
+              <div class="ri"><span class="ms" style="color:var(--muted)">hourglass_top</span><span class="meta">En attente de confirmation par la batterie, sous 24 h</span></div>
+            </div>
+            <section class="stack">
+              <h2 class="h2" style="margin:0">Manip suivante</h2>
+              <div class="todo urgent">
+                <div class="head"><span class="badge b-danger"><span class="ms s18">error</span>Urgent · via alerte</span><span class="origin">Alerte</span></div>
+                <div class="main"><span class="pic pic-g"><span class="ms">bolt</span></span><div class="fx col"><span class="lbl">Remise en service</span><span class="meta">M. Garnier · Bron · demain</span></div></div>
+              </div>
+            </section>
+          </div>
+        </sc-if>
+
+        <div class="dock" style="margin-top:auto">
+          <button class="btn btn-primary btn-block btn-xl">{{ cta }}</button>
+          <div class="home-ind"></div>
+        </div>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{
+  "result": { "editor": "enum", "options": ["resolu", "pas_resolu", "envoyee"], "default": "resolu", "tsType": "\"resolu\" | \"pas_resolu\" | \"envoyee\"" }
+}'
+    >
+      class Component extends DCLogic {
+        renderVals() {
+          const r = this.props.result ?? "resolu";
+          const ko = r === "pas_resolu";
+          const done = r === "envoyee";
+          return {
+            ko,
+            done,
+            editing: !done,
+            okCls: ko ? "rbtn" : "rbtn on-ok",
+            koCls: ko ? "rbtn on-ko" : "rbtn",
+            cta: done ? "Retour à l'accueil" : "Clôturer",
+          };
+        }
+      }
+    </script>
+  </body>
+</html>
