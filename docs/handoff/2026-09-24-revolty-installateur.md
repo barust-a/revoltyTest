@@ -24,8 +24,8 @@ l'exercice. »
 | Brainstorming + spec | ✅ validée par l'utilisateur | `docs/specs/2026-09-24-revolty-installateur-design.md` |
 | Benchmark (14 apps fabricants, dataviz, apps terrain, normes d'alarme) | ✅ intégré à la spec | `docs/research/2026-09-24-benchmark-apps.md` |
 | Maquette haute fidélité (v2 « chaleureuse ») | ✅ validée (« tout est parfait ») | `docs/design/` (PDF + sources) · Claude Design |
-| Plan d'implémentation | ⏭️ **prochaine étape** | `docs/plans/` (à créer) |
-| Proto Expo | à faire | `stacks/` / template RN |
+| Plan d'implémentation | ✅ | `docs/plans/2026-09-24-revolty-installateur.md` |
+| Proto Expo | ✅ fonctionnel (web + mobile), 287 tests verts | `installateur/` (branche `feat/revolty-installateur`) |
 | Page de notes + Loom | à faire (livrables séparés de la spec) | — |
 
 ## Décisions clés (détail : spec §7)
@@ -47,23 +47,37 @@ l'exercice. »
 - Proto : **Expo fonctionnel sur données locales**, pas de backend. Ordre de coupe si le
   temps manque : Accueil → Clôture → Données → Installation.
 
+## Le proto (état au 24/09 au soir)
+
+- Lancer : `cd installateur && npx expo start --web` (sans `CI=1`, qui coupe le rechargement
+  à chaud de Metro). Vue téléphone 390 × 844 dans les outils du navigateur.
+- Routes : `/` accueil, `/system/[id]`, `/system/[id]/data`, `/manip/[id]/close`,
+  `/install`, `/demo` (menu démo : hors ligne, échec d'envoi, coupure à Bron, retour de la
+  panne de Mme Petit, réinitialisation). L'état est persisté (localStorage sur le web) :
+  « Réinitialiser la démo » avant chaque prise du Loom.
+- Architecture : `core/` pur et testé (santé, parc, À faire, alertes → manips, clôture et
+  réconciliation, file d'envoi, mesures simulées, chiffres clés, verdicts, installation) →
+  `ports/` → `adapters/` (données de démo, horloge démo, faux serveur, faux GPS / dictée /
+  test de communication, caméra expo-camera, haptique) + `state/appStore.ts` → `features/`.
+- Écarts assumés (à citer dans la page de notes) : photos, dictée, GPS et test de
+  communication simulés (le proto doit tourner sur le web) ; file d'envoi persistée via le
+  stockage clé-valeur du template, pas AsyncStorage ; confirmation « Résolu » par la batterie
+  simulée à 3 s au lieu de 24 h ; le scénario coupure date le silence de 02:05 (au-delà du
+  seuil de 12 h) ; les actions proposées à la clôture sont propres à chaque type de manip.
+- Dette connue : `HomeScreen`, `SystemScreen` et `DataScreen` dépassent un peu les ~300
+  lignes (360–410) ; l'en-tête teal ne défile pas avec le contenu ; la caméra demande une
+  autorisation navigateur (sinon saisie manuelle, prévu).
+
 ## Prochaines étapes
 
-1. **Plan d'implémentation** : skill superpowers `writing-plans` (étape suivante imposée
-   par le skill de brainstorming), gabarit `docs/templates/plan-template.md`, tâches TDD
-   petites. Reprendre l'architecture de la spec §3.6 (`core/` pur + zod, `ports/`,
-   `adapters/`, `state/` zustand, `features/`, `app/` expo-router) et la liste des tests
-   de la spec §6.
-2. **Proto Expo** : thème = variables de `docs/design/maquette-source/revolty.css` ; la
-   simulation des mesures et le calcul des chiffres clés de
-   `docs/design/maquette-source/Donnees.dc.html` servent de référence pour
-   `generateMeasures` / `dailySummary` / `dayVerdict` (à réécrire en TS testé).
-3. **Page de notes** : choix et justifications (spec §7), questions à poser à Revolty
-   (spec §7, fin), ce qui a été écarté et pourquoi (spec §2), benchmark en appui, PDF de la
-   maquette. Mentionner que les mascottes viennent de revolty.fr.
-4. **Loom 5 min** : parcours démo proposé : accueil chargé → Mme Petit → données (frise :
-   montrer le 20 puis le 21) → clôture → écran de succès → scénario « coupure » → installation.
-5. Guide de smoke-test : **seulement si l'utilisateur le demande**.
+1. Relecture du proto par l'utilisateur, puis PR de `feat/revolty-installateur` vers `main`.
+2. **Page de notes** : choix et justifications (spec §7), questions à poser à Revolty
+   (spec §7, fin), ce qui a été écarté (spec §2), écarts du proto (ci-dessus), benchmark en
+   appui. Mentionner que les mascottes viennent de revolty.fr.
+3. **Loom 5 min** : réinitialiser la démo, puis accueil chargé → Mme Petit → données
+   (frise : montrer le 20 puis le 21) → clôture « Résolu » (confirmation batterie en 3 s) →
+   menu démo « Coupure à Bron » → accueil groupé → installation.
+4. Guide de smoke-test : **seulement si l'utilisateur le demande**.
 
 ## Conventions de travail avec cet utilisateur
 
@@ -71,9 +85,9 @@ l'exercice. »
   (règle globale CLAUDE.md). En français : le signaler en une ligne.
 - Questions : l'outil Spokenly n'est pas disponible dans ces sessions → `AskUserQuestion`,
   une question à la fois, option recommandée en premier.
-- Commits : l'utilisateur a demandé de **rester sur `main`** pour ce travail
-  (docs + maquette). Pour l'implémentation, AGENTS.md prévoit une branche
-  `feat/<topic>` : **confirmer avec lui** avant de coder.
+- Commits : docs + maquette sur `main` ; le proto sur `feat/revolty-installateur` (branche
+  fixée par la spec).
+- Shell de l'utilisateur : `cp` est un alias vers `cd`, `ls` vers eza → `/bin/cp`, `/bin/ls`.
 - Avant tout commit : `detect_changes` GitNexus (repo `revoltyTest`). L'index GitNexus est
   en retard : lancer `node .gitnexus/run.cjs analyze` avant d'attaquer du code.
 - Le hook GateGuard exige, avant la première écriture de chaque fichier (et la première

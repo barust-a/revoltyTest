@@ -1,27 +1,35 @@
-# ai-project-base
+# Revolty — app installateur (cas d'entretien)
 
-Private GitHub **template repository** — the starting point for AI-built projects.
-Extracted and generalized from the `gibberlate` workspace practices.
+Prototype mobile de l'app de suivi des batteries Revolty pour l'installateur partenaire :
+accueil (santé du parc + « À faire »), détail d'un système, données, clôture d'une manip,
+nouvelle installation. Expo / React Native, données locales, pas de backend.
 
-## What you get
+Créé à partir du template **ai-project-base** (pratiques : `AGENTS.md`).
 
-- **AGENTS.md** — a contract every AI agent follows: mandatory TDD, clean-code rules,
-  schema-first boundaries, spec → plan → implement → smoke-test workflow, git hygiene.
-- **`.claude/skills/`** — `project-practices` (generic) and `rn-app-practices`
-  (React Native / Expo, layered architecture).
-- **`docs/templates/`** — ready-to-fill spec, implementation-plan, and smoke-test templates.
-- **`stacks/react-native/`** — a runnable Expo SDK 57 skeleton: layered
-  `core → ports → adapters/state/features → app`, architecture enforced by ESLint and a
-  guard test, one tested example per layer, vitest + jest-expo, pre-commit gates.
-- **CI** — lint + typecheck + both test suites on every push.
+## Lancer
 
-## Using it
+```bash
+cd installateur
+npm install
+npx expo start --web      # démo dans le navigateur (format téléphone : 390 × 844)
+npx expo start            # Expo Go / simulateur
+```
 
-1. GitHub → **Use this template** → create your project repo.
-2. Follow **INIT.md** step by step (rename the stack, replace placeholders, wire hooks).
-3. Build features via the AGENTS.md workflow.
+La démo est figée au jeudi 24 septembre 2026, 15:00 (Lyon), puis l'horloge avance en temps
+réel. Le **Menu démo** (bas de l'accueil) simule le hors ligne, un échec d'envoi, une coupure
+à Bron, le retour d'une panne, et réinitialise la démo.
 
-## Evolving it
+## Vérifier
 
-Better practices discovered in downstream projects flow back here via PR + CHANGELOG entry.
-Downstream projects adopt updates manually — the template is the reference, not a dependency.
+```bash
+cd installateur
+npm test && npm run test:native && npm run typecheck && npm run lint
+```
+
+## Documentation
+
+- `docs/specs/2026-09-24-revolty-installateur-design.md` — la spec (comportement).
+- `docs/plans/2026-09-24-revolty-installateur.md` — le plan d'implémentation.
+- `docs/design/` — la maquette validée (sources Claude Design, tokens).
+- `docs/research/` — le benchmark qui a nourri la spec.
+- `docs/handoff/` — point de reprise : où on en est, ce qui reste.
