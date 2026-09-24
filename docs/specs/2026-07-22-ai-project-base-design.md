@@ -8,7 +8,7 @@ Repo: barust-a/ai-project-base (private, GitHub template)
 
 A private GitHub **template repository** that serves as the starting point for all future
 AI-built projects. "Idempotent" here means: every new project starts via **Use this template**
-with the same best practices, doc conventions, and guardrails already in place — nothing is
+with the same bL'aspect me convient, cependant je veux que tu fasses une deep research sur internet afin de voir les applications similaires existantes et voir leur fonctionnement pour voir s'il y a quelque chose de bon à prendre ou s'il faut de manière générale se caler sur leur fonctionnement car elles ont un standard.est practices, doc conventions, and guardrails already in place — nothing is
 recreated by hand. Extracted and generalized from the `universalVideoGameTranslator` /
 `gibberlate` workspace.
 
