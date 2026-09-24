@@ -1,7 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
 
-// Placeholder until the home feature lands (plan Task 10).
+import { HomeScreen } from '../src/features/home/HomeScreen';
+
 export default function Index() {
-  return <View />;
+  return <HomeScreen />;
 }

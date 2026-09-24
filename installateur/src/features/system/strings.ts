@@ -1,0 +1,28 @@
+// User-facing text for the system detail screen (spec §3.4 B, maquette Systeme.dc.html).
+export const SYSTEM_STRINGS = {
+  title: 'Système',
+  backLabel: 'Accueil',
+  serial: (serial: string) => `N° ${serial}`,
+  lastData: (ago: string) => `Dernière donnée : ${ago}`,
+  unverifiedBadge: 'Non vérifiée',
+  callClient: 'Appeler le client',
+  createManip: 'Créer une manip',
+  noAlertToHandle: 'Aucune alerte à traiter',
+  allAlertsHandled: 'Chaque alerte a déjà sa manip',
+  whatIsWrongTitle: 'Ce qui ne va pas',
+  nothingToReport: 'Rien à signaler sur ce système',
+  severityGrave: 'Grave',
+  severityMineure: 'Mineure',
+  forClient: 'Pour le client',
+  toCheckOnSite: 'À vérifier sur place',
+  linkedManip: (verb: string, due: string) => `Manip : ${verb} · ${due}`,
+  resolvedAlerts: (count: number) =>
+    `${count} alerte${count > 1 ? 's' : ''} résolue${count > 1 ? 's' : ''}`,
+  ongoingManipsTitle: 'Manips en cours',
+  close: 'Clôturer',
+  waitingBatteryConfirmation: 'En attente de confirmation par la batterie',
+  dataCardTitle: 'Données',
+  seeData: 'Voir les données',
+  yesterdayNormal: (phrase: string) => `Hier : ${phrase} ✓`,
+  anomalySince: (dayLabel: string) => `Anormal depuis ${dayLabel}`,
+} as const;
