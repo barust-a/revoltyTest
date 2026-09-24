@@ -1,8 +1,7 @@
 import React from 'react';
+import { View } from 'react-native';
 
-import { HomeScreen } from '../src/features/home/HomeScreen';
-
-// Route files stay thin: compose features, no business logic.
+// Placeholder until the home feature lands (plan Task 10).
 export default function Index() {
-  return <HomeScreen />;
+  return <View />;
 }
