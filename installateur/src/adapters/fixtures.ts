@@ -1,5 +1,6 @@
 import type { MeasureProfile } from '../core/measures';
 import type { Alert, DomainState, Manip, System } from '../core/types';
+import type { DemoPort } from '../ports/domain';
 
 // Demo data (spec §3.7): Karim's 20 systems around Lyon, frozen at DEMO_NOW.
 // All dates are UTC; Lyon is UTC+2 in September (15:00 local = 13:00Z).
@@ -396,5 +397,14 @@ export function bringAlertBack(state: DomainState, systemId: string, now: Date):
         ? { ...a, resolvedAt: null, since: now.toISOString() }
         : a,
     ),
+  };
+}
+
+export function createDemoPort(): DemoPort {
+  return {
+    installerName: INSTALLER_NAME,
+    initialState: createDemoState,
+    applyOutage: applyOutageScenario,
+    bringAlertBack,
   };
 }
